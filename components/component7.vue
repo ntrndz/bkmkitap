@@ -1,5 +1,5 @@
 <template>
-  <div>Fırsatlar</div>
+  <div>Frsatlsdhhar</div>
 </template>
 
 <script lang="ts" setup></script>
@@ -11,6 +11,6 @@ div {
 }
 
 h2 {
-  color: #e30613;
+  color: #796c6d;
 }
 </style>

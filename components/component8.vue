@@ -1,5 +1,5 @@
 <template>
-  <div>Fırsatlar</div>
+  <div>Frsatkjuklar</div>
 </template>
 
 <script lang="ts" setup></script>
@@ -11,6 +11,6 @@ div {
 }
 
 h2 {
-  color: #e30613;
+  color: #68681f;
 }
 </style>

@@ -12,7 +12,12 @@
   "dependencies": {
     "bootstrap": "^5.3.3",
     "nuxt": "^3.14.1592",
+    "sass": "^1.81.0",
+    "swiper": "^11.1.15",
     "vue": "latest",
     "vue-router": "latest"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.81.0"
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>Fırsatlar</div>
+  <div>dxgfd</div>
 </template>
 
 <script lang="ts" setup></script>
