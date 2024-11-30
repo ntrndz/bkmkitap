@@ -1,7 +1,7 @@
 <template>
     <div class="layout">
       <!-- Header Section -->
-      <header class="header">
+      <header class="navbar">
         <!-- Banner Image -->
         <div class="banner">
           <img
