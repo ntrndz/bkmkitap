@@ -1,7 +1,7 @@
 <template>
     <div class="layout">
       <!-- Header Section -->
-      <header class="navbar">
+      <header class="header">
         <!-- Banner Image -->
         <div class="banner">
           <img
@@ -91,6 +91,8 @@
       }
     }
   })
+
+
   </script>
   
   <style scoped lang="scss">

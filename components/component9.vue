@@ -11,6 +11,6 @@ div {
 }
 
 h2 {
-  color: #e30613;
+  color: #263d30;
 }
 </style>
