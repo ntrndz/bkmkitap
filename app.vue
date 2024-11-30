@@ -1,85 +1,93 @@
 <template>
   <div class="home">
+    <!-- Sidebar -->
     <div class="sidebar">
       <button class="sidebar-button" @click="updateState(0)">
-        Navigation Bar
+        Component 1
       </button>
       <button class="sidebar-button" @click="updateState(1)">
-        Özel Teklifler
+        Component 2
       </button>
-      <button class="sidebar-button" @click="updateState(2)">Footer</button>
+      <button class="sidebar-button" @click="updateState(2)">
+        Component 3
+      </button>
       <button class="sidebar-button" @click="updateState(3)">
-        Önerilenler
+        Component 4
       </button>
       <button class="sidebar-button" @click="updateState(4)">
-        Çok satanlar
+        Component 5
       </button>
       <button class="sidebar-button" @click="updateState(5)">
-        Tüm kategoriler
+        Component 6
       </button>
       <button class="sidebar-button" @click="updateState(6)">
-        Hizmetlerimiz
+        Component 7
       </button>
-      <button class="sidebar-button" @click="updateState(7)">Fırsatlar</button>
+      <button class="sidebar-button" @click="updateState(7)">
+        Component 8
+      </button>
       <button class="sidebar-button" @click="updateState(8)">
-        Kategori önerileri
+        Component 9
       </button>
-      <button class="sidebar-button" @click="updateState(9)">Ürün ilanı</button>
-      <span>current index: {{ state }}</span>
+      <button class="sidebar-button" @click="updateState(9)">
+        Component 10
+      </button>
     </div>
 
-    <!-- Taner'in Yapıcakları -->
+    <!-- Main Section -->
     <div class="main-section" v-if="state === 0">
-      <NavigationBar />
+      <component1 />
     </div>
     <div class="main-section" v-if="state === 1">
-      <SpecialOffers />
+      <component2 />
     </div>
     <div class="main-section" v-if="state === 2">
-      <Footer />
+      <component3 />
     </div>
     <div class="main-section" v-if="state === 3">
-      <Recomendeds />
+      <component4 />
     </div>
     <div class="main-section" v-if="state === 4">
-      <MostSolds />
+      <component5 />
     </div>
-
-    <!-- Alican'ın Yapıcakları -->
     <div class="main-section" v-if="state === 5">
-      <AllCategories />
+      <component6 />
     </div>
     <div class="main-section" v-if="state === 6">
-      <OurServices />
+      <component7 />
     </div>
     <div class="main-section" v-if="state === 7">
-      <Opportunities />
+      <component8 />
     </div>
     <div class="main-section" v-if="state === 8">
-      <CategoryRecomendation />
+      <component9 />
     </div>
     <div class="main-section" v-if="state === 9">
-      <ProductAdvert />
+      <component10 />
     </div>
   </div>
 </template>
 
+
 <script>
 import("./style.css");
-import NavigationBar from "./components/component1.vue";
-import AllCategories from "./components/component2.vue";
-import CategoryRecomendation from "./components/component3.vue";
-import Footer from "./components/component4.vue";
-import MostSolds from "./components/component5.vue";
-import Opportunities from "./components/component6.vue";
-import OurServices from "./components/component7.vue";
-import ProductAdvert from "./components/component8.vue";
-import Recomendeds from "./components/component9.vue";
-import SpecialOffers from "./components/component10.vue";
+
+// Bileşenleri içeri aktarma
+import component1 from "./components/component1.vue";
+import component2 from "./components/component2.vue";
+import component3 from "./components/component3.vue";
+import component4 from "./components/component4.vue";
+import component5 from "./components/component5.vue";
+import component6 from "./components/component6.vue";
+import component7 from "./components/component7.vue";
+import component8 from "./components/component8.vue";
+import component9 from "./components/component9.vue";
+import component10 from "./components/component10.vue";
+
 export default {
   data() {
     return {
-      state: 0,
+      state: 0, // Hangi bileşenin görüntüleneceğini kontrol eder
     };
   },
   methods: {
@@ -87,5 +95,56 @@ export default {
       this.state = index;
     },
   },
+  components: {
+    component1,
+    component2,
+    component3,
+    component4,
+    component5,
+    component6,
+    component7,
+    component8,
+    component9,
+    component10,
+  },
 };
 </script>
+
+<style scoped>
+.home {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 25%;
+  background-color: #f4f4f4;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-button {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: left;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sidebar-button:hover {
+  background-color: #d0d0d0;
+}
+
+.main-section {
+  flex-grow: 1;
+  padding: 1rem;
+  background-color: #ffffff;
+  overflow-y: auto; /* Sağ tarafta kaydırma imkanı */
+}
+</style>

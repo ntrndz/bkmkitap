@@ -10,10 +10,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@types/swiper": "^5.4.3",
     "bootstrap": "^5.3.3",
     "nuxt": "^3.14.1592",
+    "nuxt-app": "file:",
     "sass": "^1.81.0",
-    "swiper": "^11.1.15",
+    "swiper": "^7.4.1",
     "vue": "latest",
     "vue-router": "latest"
   },
