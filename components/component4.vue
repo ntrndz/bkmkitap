@@ -1,118 +1,248 @@
 <template>
   <div class="sign-up">
-    <div class="text-center header">
-      <img src="https://cdn.bkmkitap.com/Data/EditorFiles/title_icon-left.svg" alt="Icon Left" class="icon" />
-      <h5 class="title">Üye Ol</h5>
-      <img src="https://cdn.bkmkitap.com/Data/EditorFiles/title_icon-right.svg" alt="Icon Right" class="icon" />
+    <div class="tabs">
+      <button :class="{ active: isSignUp }" @click="toggleTab(true)">Üye Kayıt</button>
+      <button :class="{ active: !isSignUp }" @click="toggleTab(false)">Üye Girişi</button>
     </div>
 
-    <div class="container">
-      <div class="card">
-        <input v-model="ad" type="text" placeholder="Ad" class="input-field" />
-        <input v-model="soyad" type="text" placeholder="Soyad" class="input-field" />
-        <input v-model="email" type="email" placeholder="E-posta" class="input-field" />
-        <input v-model="password1" type="password" placeholder="Şifre" class="input-field" />
-        <input v-model="password2" type="password" placeholder="Şifre Tekrar" class="input-field" />
-        <div class="checkbox">
-          <input v-model="val" type="checkbox" />
-          <label for="terms">Kullanım Koşulları ve Gizlilik Politikası'nı okudum, kabul ediyorum.</label>
+    <div v-if="isSignUp" class="form-container">
+      <div class="form-group">
+        <input v-model="ad" type="text" placeholder="Ad *" class="input-field" />
+        <input v-model="soyad" type="text" placeholder="Soyad *" class="input-field" />
+        <input v-model="birthday" type="date" placeholder="Doğum Tarihi" class="input-field" />
+        <input v-model="cepno" type="tel" placeholder="Cep Telefonu *" class="input-field" />
+        <input v-model="email" type="email" placeholder="E-posta Adresi *" class="input-field" />
+
+        
+        <div class="password-field">
+          <input
+            v-model="password1"
+            :type="passwordVisible ? 'text' : 'password'"
+            placeholder="Şifre *"
+            class="input-field"
+          />
+          <img
+            :src="passwordVisible ? '/images/eye-open.png' : '/images/eye-closed.png'"
+            alt="Toggle Password Visibility"
+            class="toggle-password-icon"
+            @click="togglePasswordVisibility"
+          />
         </div>
-        <button @click="submitForm" class="submit-btn">Üye Ol</button>
+
+        <div class="password-field">
+          <input
+            v-model="password2"
+            :type="passwordVisible ? 'text' : 'password'"
+            placeholder="Şifre Tekrar *"
+            class="input-field"
+          />
+          <img
+            :src="passwordVisible1 ? '/images/eye-open.png' : '/images/eye-closed.png'"
+            alt="Toggle Password Visibility"
+            class="toggle-password-icon1"
+            @click="togglePasswordVisibility1"
+          />
+        </div>
+
+
       </div>
 
-      <div class="image-card">
-        <img
-          src="https://cdn.bkmkitap.com/Data/EditorFiles/bkmkitap/uye-kayit-mobil-uygulamamizi-indirin.jpg"
-          alt="Mobile App Image"
-          class="image"
-        />
+      <div class="checkbox-group">
+        <div class="checkbox" v-for="(label, index) in checkboxLabels" :key="index">
+          <input type="checkbox" v-model="checkboxValues[index]" />
+          <label>{{ label }}</label>
+        </div>
+      </div>
+
+      <button @click="submitForm" class="submit-btn">Kayıt Ol</button>
+
+      <div class="social-login">
+        <div class="separator">veya</div>
+        <button class="social-btn facebook">Facebook ile Kayıt Ol</button>
+        <button class="social-btn google">Google ile Kayıt Ol</button>
       </div>
     </div>
+
+
+
+    <div v-if="!isSignUp" class="form-container">
+      <div class="form-group">
+        <input v-model="email" type="email" placeholder="E-posta Adresi *" class="input-field" />
+        <div class="password-field">
+          <input
+            v-model="password1"
+            :type="passwordVisible ? 'text' : 'password'"
+            placeholder="Şifre *"
+            class="input-field"
+          />
+          <img
+            :src="passwordVisible ? '/images/eye-open.png' : '/images/eye-closed.png'"
+            alt="Toggle Password Visibility"
+            class="toggle-password-icon"
+            @click="togglePasswordVisibility"
+          />
+        </div>
+
+      </div>
+
+      <div class="checkbox-group">
+        <div class="checkbox" v-for="(label, index) in checkboxLabels2" :key="index">
+          <input type="checkbox" v-model="checkboxValues[index]" />
+          <label>{{ label }}</label>
+        </div>
+      </div>
+
+      <button @click="submitForm" class="submit-btn">Giriş Yap</button>
+
+      <div class="social-login">
+        <div class="separator">veya</div>
+        <button class="social-btn facebook">Facebook ile Bağlan</button>
+        <button class="social-btn google">Google ile Bağlan</button>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  data() {
+
+const passwordVisible = ref(false); // Şifre görünürlüğü kontrolü
+const passwordVisible1 = ref(false); // Şifre görünürlüğü kontrolü
+const togglePasswordVisibility = () => {
+  passwordVisible.value = !passwordVisible.value;
+};
+const togglePasswordVisibility1 = () => {
+  passwordVisible1.value = !passwordVisible1.value;
+};
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+  name: "SignUp",
+  setup() {
+    const isSignUp = ref(true);
+    const ad = ref("");
+    const soyad = ref("");
+    const birthday = ref("");
+    const cepno = ref("");
+    const email = ref("");
+    const password1 = ref("");
+    const password2 = ref("");
+    const checkboxValues = ref([false, false, false]);
+    const checkboxLabels = ref([
+      "Ticari Elektronik İleti Onayı metnini okudum, onaylıyorum. Tarafınızdan gönderilecek bilgilendirme e-postalarını almak istiyorum.",
+        "Ticari Elektronik İleti Onayı metnini okudum, onaylıyorum. Tarafınızdan gönderilecek bilgilendirme sms'lerini almak istiyorum.",
+        "Ticari Elektronik İleti Onayı metnini okudum, onaylıyorum. Tarafınızdan gönderilecek bilgilendirme arama'larını almak istiyorum.",
+        "KVKK Sözleşmesi'ni okudum ve kabul ediyorum.",
+
+      
+    ]);
+
+    const checkboxLabels2 = ref([
+      "Beni Hatırla",
+      
+    ]);
+
+    const toggleTab = (signUp: boolean) => {
+      isSignUp.value = signUp;
+    };
+
+    const submitForm = () => {
+      console.log("Form Data:", {
+        ad: ad.value,
+        soyad: soyad.value,
+        birthday: birthday.value,
+        cepno: cepno.value,
+        email: email.value,
+        password1: password1.value,
+        checkboxValues: checkboxValues.value,
+      });
+    };
+
     return {
-      val: true,
-      password1: "",
-      password2: "",
-      ad: "",
-      soyad: "",
-      email: "",
+      isSignUp,
+      ad,
+      soyad,
+      birthday,
+      cepno,
+      email,
+      password1,
+      password2,
+      checkboxLabels,
+      checkboxLabels2,
+      checkboxValues,
+      toggleTab,
+      submitForm,
+      passwordVisible,
+      passwordVisible1,
+      togglePasswordVisibility,
+      togglePasswordVisibility1,
     };
   },
-  methods: {
-    submitForm() {
-      // Formu gönderme işlemi buraya eklenecek
-      console.log("Form Submitted");
-    },
-  },
-};
+});
 </script>
 
 <style scoped lang="scss">
 .sign-up {
-  background-color: #e6e6e6;
+  max-width: 500px;
+  margin: auto;
+  background: #fff;
   padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.header {
+.tabs {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
-.icon {
-  margin: 0 10px;
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: #ffffff;
+  cursor: pointer;
 }
 
-.title {
-  display: inline-block;
-  max-width: 100%;
-  font-size: 2.75rem;
-  font-family: "AvenirNextLTPro-Demi";
-  margin-top: 50px;
-  margin-left: 10px;
+.tabs button.active {
+  color: #e30613;
+  font-weight: bold;
 }
 
-.container {
+.form-group {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-.card {
-  background-color: white;
-  padding: 20px;
-  border: 2px solid #e30613;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  width: 400px;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .input-field {
-  margin: 10px 0;
   padding: 10px;
-  width: 100%;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.checkbox {
-  margin-top: 10px;
+.phone-input {
   display: flex;
   align-items: center;
+  gap: 5px;
 }
 
-.checkbox input {
-  margin-right: 10px;
+
+.checkbox-group {
+  margin: 20px 0;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .submit-btn {
   width: 100%;
   padding: 10px;
-  background-color: #e30613;
+  background: #e30613;
   color: white;
   border: none;
   border-radius: 5px;
@@ -122,18 +252,86 @@ export default {
 }
 
 .submit-btn:hover {
-  background-color: #b70011;
+  background: #b70011;
 }
 
-.image-card {
-  width: 400px;
-  height: auto;
-  max-width: 100%;
-  margin-left: 20px;
+.social-login {
+  text-align: center;
+  margin-top: 20px;
 }
 
-.image {
+.social-btn {
+  display: block;
+  margin: 5px 0;
+  padding: 10px;
   width: 100%;
-  border-radius: 10%;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
 }
+
+.facebook {
+  background: #3b5998;
+}
+
+.google {
+  background: #db4437;
+}
+
+.separator {
+  margin: 20px 0;
+  font-weight: bold;
+  color: #999;
+}
+
+.password-field {
+  position: relative;
+  width: 100%; /* Kutucuğun genişliğini artırmak için %100 yapıldı */
+}
+
+.input-field {
+  width: 100%; /* Kutucuğun genişliği %100 */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding-right: 40px; /* Sağ tarafta simgeye yer bırakmak için artırıldı */
+}
+
+.toggle-password-icon {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+
+.toggle-password-icon1 {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+
+.input-group-append {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.text-gray {
+  color: #888;
+  font-size: 18px;
+}
+
+
+
 </style>

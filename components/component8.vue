@@ -1,5 +1,5 @@
 <template>
-  <div>Frsatkjuklar</div>
+  <div>Frsatlaafgrer</div>
 </template>
 
 <script lang="ts" setup></script>
@@ -11,6 +11,6 @@ div {
 }
 
 h2 {
-  color: #68681f;
+  color: #a8777a;
 }
 </style>
