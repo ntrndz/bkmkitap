@@ -25,7 +25,7 @@
         <!-- Menu Button -->
         <div class="menu">
           <button @click="toggleMenu" class="menu-button">
-            <span class="menu-icon">☰</span> Menu
+            <span class="menu-icon">☰</span> Menu &#x02C5
           </button>
           <div v-if="menuOpen" class="menu-dropdown">
             <ul>
@@ -33,10 +33,9 @@
               <li><button>Edebiyat Kitapları</button></li>
               <li><button>Gezi ve Rehber Kitapları</button></li>
               <li><button>Hobi & Oyuncak</button></li>
-               
             </ul>
           </div>
-        </div> 
+        </div>
 
         <!-- Search Bar -->
         <div class="search">
@@ -50,10 +49,15 @@
 
         <!-- Login, Signup, and Cart Buttons -->
         <div class="auth-cart">
-          <button class="auth-button">GİRİŞ YAP</button>
-          <button class="auth-button">ÜYE OL</button>
+          <button class="auth-button">
+            <img src="/public/images/favicon.png" alt="Üye Ol" class="button-icon" />
+          </button>
+          <button class="auth-button">
+            <img src="/public/images/profil.png" alt="Profil" class="button-icon" />
+          </button>
+
           <button class="cart-button">
-            <span class="cart-icon">🛒</span> SEPET
+            <img src="/public/images/sepet.png" alt="Sepet" class="button-icon" />
             <span class="cart-badge">0</span>
           </button>
         </div>
@@ -62,35 +66,44 @@
 
     <!-- Category Banner -->
     <div class="category-banner">
-      <div class="category-item">EDEBİYAT KİTAPLARI</div>
-      <div class="category-item">KIRTASİYE</div>
-      <div class="category-item">OKULA YARDIMCI</div>
-      <div class="category-item">OYUNCAK</div>
-      <div class="category-item">SINAVLARA HAZIRLIK</div>
-      <div class="category-item">KİTAP TAVSİYELERİ</div>
-      <div class="category-item">TÜM KAMPANYALAR</div>
-      <div class="category-item highlight">FIRSAT ÜRÜNLERİ</div>
+      <div v-for="item in categories" :key="item" class="category-item">
+        {{ item }}
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: 'HeaderComponent',
-  data() {
+  name: "HeaderComponent",
+  setup() {
+    const menuOpen = ref(false);
+    const searchQuery = ref("");
+    const categories = ref([
+      "EDEBİYAT KİTAPLARI",
+      "KIRTASİYE",
+      "OKULA YARDIMCI",
+      "OYUNCAK",
+      "SINAVLARA HAZIRLIK",
+      "KİTAP TAVSİYE",
+      "TÜM KAMPANYALAR",
+      "ÇOK SATANLAR",
+    ]);
+
+    const toggleMenu = () => {
+      menuOpen.value = !menuOpen.value;
+    };
+
     return {
-      menuOpen: false,
-      searchQuery: '',
-    }
+      menuOpen,
+      searchQuery,
+      categories,
+      toggleMenu,
+    };
   },
-  methods: {
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen
-    }
-  }
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -100,11 +113,10 @@ export default defineComponent({
   padding: 0;
 }
 
-.toolbar{
+.toolbar {
   display: flex;
   height: 70px;
   width: 100%;
-  
 }
 
 .banner {
@@ -122,7 +134,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 ;
+  padding: 0;
 }
 
 .logo {
@@ -135,14 +147,26 @@ export default defineComponent({
 
 .menu {
   position: relative;
-  margin-right : 50px;
+  margin-right: 5px;
+}
+
+.menu-icon{
+  padding: 10px;
 }
 
 .menu-button {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 23px;
+  transition: background-color 0.3s ease; /* Hover geçiş efekti */
+}
+
+.menu-button:hover {
+  background-color: #e30613; /* Kırmızı arka plan */
+  color: #ffffff; /* Beyaz yazı rengi */
+  border-radius: 5px; /* Hafif yuvarlak köşeler */
+  padding: 5px; /* Hover sırasında kutunun genişlemesi */
 }
 
 .menu-dropdown {
@@ -185,30 +209,45 @@ export default defineComponent({
 }
 
 .auth-button {
-  background-color: #e30613;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin: 0 10px;
+  background-color: #ffffff;
+  border: 1px solid transparent;
+  padding: 10px 15px;
+  margin: 0 5px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.auth-button:hover {
+  border-color: #e30613;
+  box-shadow: 0 0 5px rgba(227, 6, 19, 0.5);
 }
 
 .cart-button {
-  background-color: #e30613;
-  color: white;
-  border: none;
-  padding: 10px 20px;
+  background-color: #ffffff;
+  border: 1px solid transparent;
+  padding: 10px 15px;
+  margin: 0 5px;
   cursor: pointer;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
-.cart-icon {
-  margin-right: 8px;
+.cart-button:hover {
+  border-color: #e30613;
+  box-shadow: 0 0 5px rgba(227, 6, 19, 0.5);
 }
 
 .cart-badge {
-  background-color: #fff;
-  color: #e30613;
+  background-color: #e30613;
+  color: #ffffff;
   padding: 3px 8px;
   border-radius: 50%;
   position: absolute;
@@ -218,24 +257,38 @@ export default defineComponent({
 
 .category-banner {
   display: flex;
-  justify-content: space-around;
-  background-color: #e6e6e6;
-  padding: 20px 0;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 2px 200px;
+  border-bottom: 1px solid #ddd;
 }
 
 .category-item {
-  font-size: 16px;
-  color: #585856;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
   cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  margin-right: 5px;
+
+}
+
+.category-item:not(:last-child) {
+  border-right: 1px solid #e30613;
 }
 
 .category-item:hover {
-  text-decoration: underline;
+  background-color: #e30613;
+  color: #fff;
+  border-radius: 15px;
 }
 
 .highlight {
   color: #e30613;
   font-weight: bold;
 }
-
 </style>
