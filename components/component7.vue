@@ -10,73 +10,82 @@
         <p class="user-email">nehir_tirindaz@hotmail.com</p>
         <button class="account-button">Hesabım</button>
       </div>
-      <div class="menu-item">
-        <button class="menu-btn">
-          <i class="menu-icon">👤Kişisel Bilgilerim</i> 
+      <div class="menu-list">
+        <button class="menu-item">
+          <img src="/public/images/avatar.png" alt="Icon" class="menu-icon1" />
+
+          <h7>KİŞİSEL BİLGİLERİM</h7>
         </button>
-      </div>
-      <div class="menu-item">
-        <button class="menu-btn">
-          <i class="menu-icon">📧Mesajlarım</i> 
+        <button class="menu-item">
+          <img src="/public/images/messages.png" alt="Icon" class="menu-icon1" />
+ 
+          MESAJLARIM  
         </button>
-      </div>
-      <div class="menu-item">
-        <button class="menu-btn">
-          <i class="menu-icon">🚪</i> Çıkış
+        <button class="menu-item">
+          <img src="/public/images/Exit.png" alt="Icon" class="menu-icon1" />
+           ÇIKIŞ
         </button>
       </div>
     </div>
 
     <!-- Menü -->
     <div class="menu">
-     
-      
-      <!-- Üst Satır Menüsü -->
+      <!-- Sipariş Takip ve Üst Satır -->
       <div class="menu-row top-row">
- <!-- Sipariş Takip Arama -->
-       <div class="order-tracking">
-        <p class="order-title">SİPARİŞ TAKİP</p>
-        <input v-model="orderNumber" type="text" class="order-input" placeholder="Sipariş Numarası" />
-        <button @click="searchOrder" class="search-btn">ARA</button>
+        <div class="order-tracking">
+          <p class="order-title">SİPARİŞ TAKİP</p>
+          <div class="order-input-container">
+            <input
+              v-model="orderNumber"
+              type="text"
+              class="order-input"
+              placeholder="Sipariş Numarası"
+            />
+            <button @click="searchOrder" class="search-btn">ARA</button>
+          </div>
+        </div>
+        <div class="menu-item">
+          <button class="menu-btn">
+            <i class="menu-icon">🛒</i> Siparişlerim
+          </button>
+        </div>
+        <div class="menu-item">
+          <button class="menu-btn">
+            <i class="menu-icon">❤</i> Favorilerim
+          </button>
+        </div>
+        <div class="menu-item">
+          <button class="menu-btn">
+            <i class="menu-icon">🎁</i> Hediye Çeklerim
+          </button>
+        </div>
       </div>
 
-        <div class="menu-item1">
-          <button class="menu-btn1">
-            <i class="menu-icon1">🛒</i> Siparişlerim
-          </button>
-        </div>
-        <div class="menu-item1">
-          <button class="menu-btn1">
-            <i class="menu-icon1">❤️</i> Favorilerim
-          </button>
-        </div>
-        <div class="menu-item1">
-          <button class="menu-btn1">
-            <i class="menu-icon1">🎁</i> Hediye Çeklerim
-          </button>
-        </div>
-      </div>
-
-      <!-- Alt Satır Menüsü -->
+      <!-- Alt Satır -->
       <div class="menu-row bottom-row">
-        <div class="menu-item1">
-          <button class="menu-btn1">
-            <i class="menu-icon1">📍</i> Adreslerim
+        <div class="menu-item">
+          <button class="menu-btn">
+            <i class="menu-icon">📍</i> Adreslerim
           </button>
         </div>
-        <div class="menu-item1">
-          <button class="menu-btn1">
-            <i class="menu-icon1">⭐</i> Puanlarım
+        <div class="menu-item">
+          <button class="menu-btn">
+            <i class="menu-icon">⭐</i> Puanlarım
           </button>
         </div>
-        <div class="menu-item1">
-          <button class="menu-btn1">
-            <i class="menu-icon1">⏰</i> Stok Alarm Listem
+        <div class="menu-item">
+          <button class="menu-btn">
+            <i class="menu-icon">⏰</i> Stok Alarm Listem
           </button>
         </div>
-        <div class="menu-item1">
-          <button class="menu-btn1">
-            <i class="menu-icon1">🔔</i> Fiyat Alarm Listem
+        <div class="menu-item">
+          <button class="menu-btn">
+            <i class="menu-icon">🔔</i> Havale Bildirimi
+          </button>
+        </div>
+        <div class="menu-item">
+          <button class="menu-btn">
+            <i class="menu-icon">💡</i> Fiyat Alarm Listem
           </button>
         </div>
       </div>
@@ -85,62 +94,66 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const orderNumber = ref<string>('');
+const orderNumber = ref<string>("");
 
-// Sipariş numarası arama işlevi
 const searchOrder = () => {
   if (orderNumber.value) {
-    console.log(`Sipariş numarası: ${orderNumber.value}`);
-    // Burada API veya başka bir işlev çağrılabilir.
+    console.log('Sipariş Numarası: ${orderNumber.value}');
+    // Burada API çağrısı yapılabilir.
   }
 };
 </script>
 
 <style scoped>
+/* Genel Yapı */
 .container {
   display: flex;
+  gap: 20px;
   padding: 20px;
   font-family: Arial, sans-serif;
 }
 
+/* Sol Sütun (Profilim) Alanı */
 .user-info {
   display: flex;
   flex-direction: column;
-  margin-right: 40px;
   align-items: center;
-  width: 250px; /* Sol alan genişliği */
-  background-color: #f9f9f9; /* Arka plan */
+  width: 250px;
   padding: 20px;
+  background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .avatar img {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  margin-bottom: 10px;
+  border: 2px solid #ddd;
+  margin-bottom: 15px;
 }
 
 .user-details {
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .user-name {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   color: #333;
-  margin: 5px 0;
+  margin-bottom: 5px;
 }
 
 .user-email {
   font-size: 14px;
-  color: #666;
-  margin-bottom: 2px;
+  color: #e74c3c;
+  margin-bottom: 15px;
 }
 
+/* Hesabım Butonu */
 .account-button {
   padding: 10px 20px;
   background-color: #ffffff;
@@ -158,145 +171,152 @@ const searchOrder = () => {
   color: #e74c3c;
 }
 
-.menu {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.order-tracking {
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: 500px;
-}
-
-.order-input {
-  flex: 1;
-  padding: 12px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.search-btn {
-  padding: 10px 20px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.search-btn:hover {
-  background-color: #2980b9;
-}
-
-.menu-row {
-  display: grid;
-  gap: 15px;
-}
-
-.top-row {
-  grid-template-columns: repeat(10, 1fr); /* Üst sıra için 3 sütun */
-}
-
-.bottom-row {
-  grid-template-columns: repeat(5, 1fr); /* Alt sıra için 4 sütun */
+/* Menü Öğeleri */
+.menu-list {
+  width: 100%;
 }
 
 .menu-item {
-  text-align: center;
-}
-
-.menu-btn {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 15px;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  height: 120px; /* Kutu yüksekliği */
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  color: #333;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 0px solid #ddd;
 }
 
-.menu-btn:hover {
+.menu-item:hover {
   background-color: #f9f9f9;
   border-color: #e74c3c;
 }
 
 .menu-icon {
-  font-size: 24px; /* İkon boyutu */
+  font-size: 18px;
+  margin-right: 10px;
   color: #333;
 }
 
-.menu-btn:hover .menu-icon {
-  color: #e74c3c; /* İkon rengi hover durumu */
-}
-
-.menu-btn span {
-  font-size: 14px;
+.notification-badge {
+  display: inline-block;
+  background-color: #28a745;
+  color: #fff;
+  font-size: 12px;
   font-weight: bold;
-  color: #333;
+  padding: 2px 8px;
+  border-radius: 12px;
 }
 
-
-
-
-
-
-
-
-.menu-item1 {
-  text-align: center;
+/* Sağ Menü Alanı */
+.menu {
+  flex: 1;
 }
 
-.menu-btn1 {
-  align-items: center;
+.menu-row {
+  display: grid;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.top-row {
+  grid-template-columns: 2fr 1fr 1fr 1fr; /* Sipariş Takip + 3 kutu */
+}
+
+.bottom-row {
+  grid-template-columns: repeat(5, 1fr); /* Alt satırda 5 eşit sütun */
+}
+
+.order-tracking {
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+}
+
+.order-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.order-input-container {
+  display: flex;
   gap: 10px;
+}
+
+.order-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.search-btn {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-btn:hover {
+  background: #2980b9;
+}
+
+.menu-btn {
+  width: 100%;
+  height: 120px;
   padding: 15px;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid #ddd;
   border-radius: 10px;
-  height: 120px; /* Kutu yüksekliği */
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.menu-btn1:hover {
-  background-color: #f9f9f9;
+.menu-btn:hover {
   border-color: #e74c3c;
 }
 
-.menu-icon1 {
-  font-size: 24px; /* İkon boyutu */
+.menu-btn:hover .menu-icon {
+  color: #e74c3c;
+}
+
+.menu-icon {
+  font-size: 24px;
+  margin-bottom: 5px;
   color: #333;
 }
-
-.menu-btn1:hover .menu-icon {
-  color: #e74c3c; /* İkon rengi hover durumu */
+.menu-item i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-light);
+  border-radius: 50%;
+  width: 30px; /* İkon boyutu */
+  height: 30px; /* İkon boyutu */
+  font-size: 18px;
+  margin-right: 10px;
 }
-
-.menu-btn1 span {
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
+.menu-icon1{
+  width: 20%;
+  background-color:#e74c3c;
 }
-
-
-
-
-
-
 
 </style>
