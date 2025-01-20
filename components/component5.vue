@@ -11,24 +11,26 @@
 
     <!-- Item List -->
     <div class="list">
-      <div v-for="(item, index) in items" :key="index" class="list-item">
-        <div class="item-box">
-          <div class="item-left">
-            <div class="checkbox-container">
-              <input type="checkbox" class="checkbox" />
+      <div v-if="shoppingListStore.items.length === 0" class="empty-message">
+        Favorileriniz boş.
+      </div>
+      <div v-else>
+        <div v-for="(item, index) in shoppingListStore.items" :key="item.id" class="list-item">
+          <div class="item-box">
+            <div class="item-left">
+              <div class="checkbox-container">
+                <input type="checkbox" class="checkbox" />
+              </div>
+              <img :src="item.image" :alt="item.title" class="item-image" />
             </div>
-            <img :src="item.image" :alt="item.title" class="item-image" />
-          </div>
-          <div class="item-details">
-            <h3 class="item-publisher">{{ item.publisher }}</h3>
-            <p class="item-title">{{ item.title }}</p>
-          </div>
-          <div class="item-right">
-            <div class="price-trash-container">
-              <p class="item-price">{{ item.price }} TL</p>
-              <button @click="removeItem(index)" class="delete-button">
-                🗑️
-              </button>
+            <div class="item-details">
+              <p class="item-title">{{ item.title }}</p>
+            </div>
+            <div class="item-right">
+              <div class="price-trash-container">
+                <p class="item-price">{{ item.discountedPrice }} TL</p>
+                <button @click="removeItem(item.id)" class="delete-button">🗑️</button>
+              </div>
             </div>
           </div>
         </div>
@@ -37,55 +39,36 @@
 
     <!-- Actions -->
     <div class="actions-container">
-      <button class="action-button add-to-cart">
-        🛒 Seçilenleri Sepete Ekle
-      </button>
-      <button class="action-button delete-selected">
-        🗑️ Seçilenleri Sil
-      </button>
-      <button class="action-button print">
-        🖨️ Yazdır
-      </button>
-      <button class="action-button share">
-        🔗 Paylaş
-      </button>
+      <button class="action-button add-to-cart">🛒 Seçilenleri Sepete Ekle</button>
+      <button class="action-button delete-selected">🗑️ Seçilenleri Sil</button>
+      <button class="action-button print">🖨️ Yazdır</button>
+      <button class="action-button share">🔗 Paylaş</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
+import { useShoppingListStore } from "@/stores/shoppingList";
 
 export default defineComponent({
   name: "Component5",
-  data() {
-    return {
-      items: [
-        {
-          image: "https://cdn.bkmkitap.com/bulbul-kapani-1-hediyeli-ozel-kutu-13648029-88-K.jpg",
-          publisher: "Ephesus Yayınları",
-          title: "Bülbül Kapanı 1 Hediyeli Özel Kutu",
-          price: "239,40",
-        },
-        {
-          image: "https://cdn.bkmkitap.com/gokcen-iki-kitaplik-set-866047-13625715-86-K.jpg",
-          publisher: "Ephesus Yayınları",
-          title: "Gökçen İki Kitaplık Set",
-          price: "400,80",
-        },
-        {
-          image: "https://cdn.bkmkitap.com/gokcen-3-guz-yagmurlari-hediyeli-ozel-kutu-13631546-87-K.jpg",
-          publisher: "Ephesus Yayınları",
-          title: "Gökçen 3: Güz Yağmurları - Hediyeli Özel Kutu",
-          price: "239,40",
-        },
-      ],
+  setup() {
+    const shoppingListStore = useShoppingListStore();
+
+    // Firestore'dan verileri çek
+    onMounted(() => {
+      shoppingListStore.fetchItems();
+    });
+
+    const removeItem = async (id: string) => {
+      await shoppingListStore.removeItem(id);
     };
-  },
-  methods: {
-    removeItem(index: number) {
-      this.items.splice(index, 1);
-    },
+
+    return {
+      shoppingListStore,
+      removeItem,
+    };
   },
 });
 </script>

@@ -38,7 +38,7 @@
         </div>
 
         <!-- Add to Favorites -->
-        <button class="add-to-favorites">
+        <button class="add-to-favorites" @click="addToShoppingList">
           <i class="fas fa-heart"></i> ❤ Alışveriş Listeme Ekle
         </button>
 
@@ -75,13 +75,15 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { useShoppingListStore } from "@/stores/shoppingList";
+
 
 export default defineComponent({
-  name: "BookDetail",
-  data() {
-    return {
-      breadcrumb: ["Anasayfa", "Edebiyat Kitapları", "Araştırma ve İnceleme Kitapları", "Edebiyatın İlhamıyla Taylor Swift"],
-      book: {
+  name: "Component11",
+  setup() {
+    const shoppingListStore = useShoppingListStore();
+
+    const book = {
         title: "Edebiyatın İlhamıyla Taylor Swift",
         author: "Rachel Feder",
         originalPrice: 265.0,
@@ -97,10 +99,21 @@ export default defineComponent({
         publicationYear: 2024,
         sales: 461,
         image: "/images/kitap.png",
-      },
+    };
+
+    const addToShoppingList = () => {
+      shoppingListStore.addItem(book);
+      alert("Kitap alışveriş listesine eklendi!");
+    };
+
+    return {
+      breadcrumb: ["Anasayfa", "Edebiyat Kitapları", "Araştırma ve İnceleme Kitapları", "Edebiyatın İlhamıyla Taylor Swift"],
+      book,
+      addToShoppingList,
       quantity: ref(1),
     };
   },
+
   methods: {
     increaseQuantity() {
       this.quantity++;
@@ -113,6 +126,9 @@ export default defineComponent({
     },
   },
 });
+
+
+
 </script>
 
 <style scoped>

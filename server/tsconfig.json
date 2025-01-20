@@ -1,3 +1,21 @@
 {
-  "extends": "../.nuxt/tsconfig.server.json"
+  "extends": "../.nuxt/tsconfig.server.json",
+  "compilerOptions": {
+    "strict": true, // TypeScript hatalarını yakalamak için sıkı mod
+    "baseUrl": ".", // Proje kök dizini
+    "paths": {
+      "#app": [".nuxt/types/app/index.d.ts"],
+      "#build": [".nuxt/types/build/index.d.ts"]
+    }
+  },
+  "include": [
+    ".nuxt/types/**/*.d.ts", // Nuxt'un tür tanımlamaları
+    "nuxt.config.ts", // Nuxt konfigürasyon dosyanız
+    "plugins/**/*.ts", // Pluginler
+    "stores/**/*.ts", // Pinia mağazaları
+    "components/**/*.vue", // Vue bileşenleri
+    "pages/**/*.vue", // Sayfa dosyaları
+    "layouts/**/*.vue", // Layout dosyaları
+    "composables/**/*.ts" // Composable dosyaları
+  ]
 }
