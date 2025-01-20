@@ -144,6 +144,8 @@ const filterOptions = (filterName: string) => {
   padding: 10px;
   border-radius: 4px;
   width: 300px;
+  margin-left: 225px;
+  margin-bottom: 500px;
 }
 
 .category-header {

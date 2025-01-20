@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: "PopularPublishersWithBanner",
+  name: "Component6",
   data() {
     return {
       publishers: [
@@ -74,7 +74,7 @@ export default {
   margin: 0 auto;
   padding: 20px;
   width: 80%; /* Div genişliğini kısıtla */
-  max-width: 1200px; /* Maksimum genişlik belirle */
+  max-width: 1450px; /* Maksimum genişlik belirle */
   margin-top: 20px; /* Üstten biraz boşluk bırak */
   display: flex;
   flex-direction: column;
@@ -98,7 +98,6 @@ export default {
   border: 1px solid #e9e9e9; /* Kutu kenarlığı */
   border-radius: 55px; /* Kutu köşe yuvarlatma */
   background-color: white; /* Kutu arka planı */
-
   transition: all 0.3s ease; /* Kutu efektleri için geçiş */
 }
 
@@ -126,5 +125,6 @@ export default {
 /* TailwindCSS ile varsayılan stil ekleme */
 .relArea {
   position: relative;
+  margin-bottom: 25px;
 }
 </style>   

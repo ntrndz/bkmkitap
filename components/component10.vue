@@ -1,5 +1,81 @@
+<template>
+  <div class="cart-campaign-list">
+    <h2 class="cart-cmp-title">Sepete Özel Kampanyalar</h2>
+
+    <!-- Üst sıra -->
+    <div class="campaign-grid">
+      <div
+        v-for="campaign in campaigns"
+        :key="campaign.id"
+        class="campaign-card"
+      >
+        <div class="card-header">
+          <div class="card-banner"></div>
+          <img :src="campaign.image" :alt="campaign.title" />
+        </div>
+        <div class="card-body">
+          <a :href="campaign.link" target="_blank" class="campaign-title">
+            {{ campaign.title }}
+          </a>
+          <div class="campaign-price">{{ campaign.price }}</div>
+          <div class="campaign-actions">
+            <button
+              @click="toggleCampaign(campaign)"
+              class="action-button"
+            >
+              {{ campaign.isActive ? 'Aktif' : 'Aktif Et' }}
+              <input
+                type="checkbox"
+                class="campaign-checkbox"
+                :checked="campaign.isActive"
+                readonly
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alt sıra -->
+    <div class="campaign-grid mt-4">
+      <div
+        v-for="campaign in secondRowCampaigns"
+        :key="`alt-${campaign.id}`"
+        class="campaign-card"
+      >
+        <div class="card-header">
+          <div class="card-banner"></div>
+          <img :src="campaign.image" :alt="campaign.title" />
+        </div>
+        <div class="card-body">
+          <a :href="campaign.link" target="_blank" class="campaign-title">
+            {{ campaign.title }}
+          </a>
+          <div class="campaign-price">{{ campaign.price }}</div>
+          <div class="campaign-actions">
+            <button
+              @click="toggleCampaign(campaign)"
+              class="action-button"
+            >
+              {{ campaign.isActive ? 'Aktif' : 'Aktif Et' }}
+              <input
+                type="checkbox"
+                class="campaign-checkbox"
+                :checked="campaign.isActive"
+                readonly
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
 <script lang="ts" setup>
 import { ref } from 'vue';
+
 
 const campaigns = ref([
   {
@@ -116,79 +192,6 @@ const toggleCampaign = (campaign: any) => {
 
 </script>
 
-<template>
-  <div class="cart-campaign-list">
-    <h2 class="cart-cmp-title">Sepete Özel Kampanyalar</h2>
-
-    <!-- Üst sıra -->
-    <div class="campaign-grid">
-      <div
-        v-for="campaign in campaigns"
-        :key="campaign.id"
-        class="campaign-card"
-      >
-        <div class="card-header">
-          <div class="card-banner"></div>
-          <img :src="campaign.image" :alt="campaign.title" />
-        </div>
-        <div class="card-body">
-          <a :href="campaign.link" target="_blank" class="campaign-title">
-            {{ campaign.title }}
-          </a>
-          <div class="campaign-price">{{ campaign.price }}</div>
-          <div class="campaign-actions">
-            <button
-              @click="toggleCampaign(campaign)"
-              class="action-button"
-            >
-              {{ campaign.isActive ? 'Aktif' : 'Aktif Et' }}
-              <input
-                type="checkbox"
-                class="campaign-checkbox"
-                :checked="campaign.isActive"
-                readonly
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Alt sıra -->
-    <div class="campaign-grid mt-4">
-      <div
-        v-for="campaign in secondRowCampaigns"
-        :key="`alt-${campaign.id}`"
-        class="campaign-card"
-      >
-        <div class="card-header">
-          <div class="card-banner"></div>
-          <img :src="campaign.image" :alt="campaign.title" />
-        </div>
-        <div class="card-body">
-          <a :href="campaign.link" target="_blank" class="campaign-title">
-            {{ campaign.title }}
-          </a>
-          <div class="campaign-price">{{ campaign.price }}</div>
-          <div class="campaign-actions">
-            <button
-              @click="toggleCampaign(campaign)"
-              class="action-button"
-            >
-              {{ campaign.isActive ? 'Aktif' : 'Aktif Et' }}
-              <input
-                type="checkbox"
-                class="campaign-checkbox"
-                :checked="campaign.isActive"
-                readonly
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .cart-campaign-list {
@@ -201,7 +204,7 @@ const toggleCampaign = (campaign: any) => {
   font-weight: bold;
   font-size: 1.5rem;
   margin-bottom: 20px;
-  margin-left: 35px;
+  margin-left: 220px;
 }
 
 .campaign-grid {

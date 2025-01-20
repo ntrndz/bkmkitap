@@ -94,7 +94,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { defineComponent, ref } from "vue";
+
 
 const orderNumber = ref<string>("");
 
@@ -113,6 +114,7 @@ const searchOrder = () => {
   gap: 20px;
   padding: 20px;
   font-family: Arial, sans-serif;
+  margin-bottom: 30px;
 }
 
 /* Sol Sütun (Profilim) Alanı */

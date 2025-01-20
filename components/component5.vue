@@ -57,7 +57,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "FavoriteListComponent",
+  name: "Component5",
   data() {
     return {
       items: [

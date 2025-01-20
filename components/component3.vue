@@ -20,7 +20,7 @@
       <img src="https://www.bkmkitap.com/Data/EditorFiles/icon/icon5.svg" alt="Suç ve Gizem" />
       <div class="text-h6">Suç ve Gizem</div>
     </div>
-    <div class="button-item">
+    <div class="button-item" @click="goToBookDetail">
       <img src="https://www.bkmkitap.com/Data/EditorFiles/icon/icon6.svg" alt="Fantastik" />
       <div class="text-h6">Fantastik</div>
     </div>
@@ -36,17 +36,33 @@
 </template>
 
 <script lang="ts">
+import { navigateTo } from "nuxt/app"; // Nuxt yönlendirme fonksiyonu
+
 export default {
-  name: "ButtonList",
+  name: "Component3",
+  setup() {
+ 
+
+ const goToBookDetail = () => {
+      navigateTo("/page6"); // Page 6'ye yönlendir
+    };
+
+return {
+      
+      goToBookDetail,
+      
+    };
+  },
 };
 </script>
 
 <style scoped>
 .button-container {
+  margin-top: 70px;
   display: flex;
   flex-wrap: wrap; /* Butonları sarmak için wrap kullanıyoruz */
-  gap: 10px; /* Butonlar arasında boşluk */
-  justify-content: center;
+  gap: 20px; /* Butonlar arasında boşluk artırıldı */
+  justify-content: center; /* Ortaladı */
 }
 
 .button-item {
@@ -54,13 +70,17 @@ export default {
   flex-direction: column;
   align-items: center;
   border: 2px solid #e5e5e5;
-  padding: 10px;
-  border-radius: 12px; /* Oval kenarlar için */
+  padding: 20px; /* Kutunun iç boşluğu büyütüldü */
+  border-radius: 40px; /* Oval kenarlar için */
   transition: border-color 0.3s ease; /* Hover sırasında kenar renginin geçişi */
+  width: 150px; /* Kutunun genişliği artırıldı */
+  height: 150px; /* Kutunun yüksekliği artırıldı */
 }
 
 .button-item img {
   margin-bottom: 8px;
+  max-width: 60px; /* Görsel boyutları kontrol edildi */
+  max-height: 60px;
 }
 
 .button-item:hover {
@@ -68,9 +88,10 @@ export default {
 }
 
 .text-h6 {
-  font-size: 13px;
+  font-size: 15px; /* Yazı boyutu büyütüldü */
   font-family: "hinted-subset-AvenirNextLTPro-Demi";
   padding: 10px 0 0 0;
   color: #4d4d4d;
 }
+
 </style>

@@ -47,11 +47,12 @@ import "swiper/css/effect-fade";
 SwiperCore.use([Navigation, Pagination, Autoplay, EffectFade]);
 
 export default defineComponent({
-  name: 'App',
+  name: 'Component1',
   components: {
     Swiper,
     SwiperSlide,
   },
+
   setup() {
     // swiperRef'e tip ataması yapıyoruz
     const swiperRef = ref<SwiperInstance | null>(null);
@@ -83,6 +84,8 @@ export default defineComponent({
 .mySwiper {
   width: 100%;
   height: 500px; /* Slider yüksekliği */
+  margin-top: 5px;
+  
 }
 
 .swiper-slide img {

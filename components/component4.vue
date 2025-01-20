@@ -5,7 +5,7 @@
       <button :class="{ active: !isSignUp }" @click="toggleTab(false)">Üye Girişi</button>
     </div>
 
-    <div v-if="isSignUp" class="form-container">
+    <div v-if="isSignUp" class="container">
       <div class="form-group">
         <input v-model="ad" type="text" placeholder="Ad *" class="input-field" />
         <input v-model="soyad" type="text" placeholder="Soyad *" class="input-field" />
@@ -117,7 +117,7 @@ const togglePasswordVisibility1 = () => {
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: "SignUp",
+  name: "Component4",
   setup() {
     const isSignUp = ref(true);
     const ad = ref("");
@@ -183,13 +183,17 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .sign-up {
-  max-width: 500px;
-  margin: auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 60%; /* Genişliği artırdım */
+  max-width: 600px; /* Maksimum genişlik belirlendi */
+  margin: 0 auto; /* Ortalamak için */
+  background-color: #fff; /* Arka plan rengi */
+  padding: 20px; /* İç boşluklar */
+  border-radius: 10px; /* Köşe yuvarlama */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Hafif bir gölge efekti */
+  margin-top: 100px;
+  margin-bottom: 55px;
 }
+
 
 .tabs {
   display: flex;
@@ -210,10 +214,12 @@ export default defineComponent({
   font-weight: bold;
 }
 
+
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  
 }
 
 .input-field {

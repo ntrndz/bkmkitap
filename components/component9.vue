@@ -144,6 +144,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+const title = "Component9";
+
 const categories = ref([
   "Edebiyat Kitaplari",
   "Tarih Kitaplari",
@@ -237,6 +239,9 @@ const paymentLogos = ref([
     alt: "Visa Electron",
   },
 ]);
+
+
+
 </script>
 
 <style scoped>

@@ -2,17 +2,8 @@
   <div class="layout">
     <!-- Header Section -->
     <header class="navbar">
-      <!-- Banner Image -->
-      <div class="banner">
-        <img
-          src="https://cdn.bkmkitap.com/Data/EditorFiles/yil-sonu-indirimleri-kampanyasi-top-banner.webp"
-          alt="Banner"
-          class="banner-image"
-        />
-      </div>
-
       <!-- Logo and Menu Section -->
-      <div class="toolbar">
+      <div class="fixed-header">
         <!-- Logo -->
         <div class="logo">
           <img
@@ -29,8 +20,8 @@
           </button>
           <div v-if="menuOpen" class="menu-dropdown">
             <ul>
+              <li><button >Edebiyat Kitapları</button></li>
               <li><button>Çocuk Kitapları</button></li>
-              <li><button>Edebiyat Kitapları</button></li>
               <li><button>Gezi ve Rehber Kitapları</button></li>
               <li><button>Hobi & Oyuncak</button></li>
             </ul>
@@ -49,14 +40,14 @@
 
         <!-- Login, Signup, and Cart Buttons -->
         <div class="auth-cart">
-          <button class="auth-button">
-            <img src="/public/images/favicon.png" alt="Üye Ol" class="button-icon" />
+          <button class="auth-button" @click="goToFavorites">
+            <img src="/public/images/favicon.png" alt="Favoriler" class="button-icon" />
           </button>
           <button class="auth-button">
             <img src="/public/images/profil.png" alt="Profil" class="button-icon" />
           </button>
 
-          <button class="cart-button">
+          <button class="cart-button" @click="goToSepet">
             <img src="/public/images/sepet.png" alt="Sepet" class="button-icon" />
             <span class="cart-badge">0</span>
           </button>
@@ -66,18 +57,25 @@
 
     <!-- Category Banner -->
     <div class="category-banner">
-      <div v-for="item in categories" :key="item" class="category-item">
-        {{ item }}
-      </div>
-    </div>
+  <div
+    v-for="item in categories"
+    :key="item"
+    class="category-item"
+    @click="handleCategoryClick(item)" 
+  >
+    {{ item }}
+  </div>
+</div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { navigateTo } from "nuxt/app"; // Nuxt yönlendirme fonksiyonu
+import { useRouter } from "vue-router"; // Vue Router kullanımı
 
 export default defineComponent({
-  name: "HeaderComponent",
+  name: "Component2",
   setup() {
     const menuOpen = ref(false);
     const searchQuery = ref("");
@@ -92,8 +90,30 @@ export default defineComponent({
       "ÇOK SATANLAR",
     ]);
 
+    const router = useRouter(); // Yönlendirme için Router
+    const handleCategoryClick = (category: string) => {
+      if (category === "EDEBİYAT KİTAPLARI") {
+        router.push("/page5"); // Edebiyat Kitapları için yönlendirme
+      } else {
+        console.log(`${category} için bir yönlendirme tanımlanmadı.`);
+      }
+    };
+
+
+
     const toggleMenu = () => {
       menuOpen.value = !menuOpen.value;
+    };
+
+
+
+    // Favoriler sayfasına yönlendirme
+    const goToFavorites = () => {
+      navigateTo("/page7"); // Page 7'ye yönlendir
+    };
+
+    const goToSepet = () => {
+      navigateTo("/page4"); // Page 4'ye yönlendir
     };
 
     return {
@@ -101,12 +121,36 @@ export default defineComponent({
       searchQuery,
       categories,
       toggleMenu,
+      goToFavorites,
+      handleCategoryClick,
+      goToSepet,
     };
   },
 });
 </script>
 
+
+
+
+
 <style scoped lang="scss">
+.fixed-header {
+  position: fixed; /* Sabit pozisyon */
+  top: 0; /* Sayfanın üst kısmına sabitler */
+  left: 0;
+  right: 0; /* Ortalamak için sağ sınırı belirle */
+  width: 100%; /* Tüm genişliği kaplar */
+  background-color: white; /* Arka plan rengi */
+  z-index: 1000; /* Diğer öğelerin üzerine çıkması için */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hafif bir gölge */
+  display: flex;
+  justify-content: space-between; /* İçeriği yaymak için */
+  align-items: center;
+  padding: 10px 20px; /* İç boşluklar */
+  max-width: 1450px; /* Maksimum genişlik belirle */
+  margin: 0 auto; /* Yatayda ortalar */
+}
+
 .layout {
   font-family: "Avenir", sans-serif;
   margin: 0;
@@ -122,6 +166,7 @@ export default defineComponent({
 .banner {
   width: 100%;
   height: 10%;
+  
 }
 
 .banner-image {
@@ -131,10 +176,11 @@ export default defineComponent({
 }
 
 .toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0;
+  max-width: 1450px; /* Üst kısım için de maksimum genişlik */
+  margin-left: auto; /* Ortalamak için */
+  margin-right: auto; /* Ortalamak için */
+  padding: 0 20px; /* Sağ ve sol boşluk ekle */
+  box-sizing: border-box; /* Padding'in genişlik dahil olmasını sağlar */
 }
 
 .logo {
@@ -146,8 +192,9 @@ export default defineComponent({
 }
 
 .menu {
-  position: relative;
-  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  
 }
 
 .menu-icon{
@@ -201,11 +248,13 @@ export default defineComponent({
   padding: 8px;
   font-size: 14px;
   border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .auth-cart {
   display: flex;
   align-items: center;
+  
 }
 
 .auth-button {
@@ -245,6 +294,13 @@ export default defineComponent({
   box-shadow: 0 0 5px rgba(227, 6, 19, 0.5);
 }
 
+/* Görüntüyü küçültme */
+.cart-button .button-icon {
+  width:40px; /* Genişlik */
+  height: 40px; /* Yükseklik */
+  object-fit: contain; /* Orantılı ölçekleme */
+}
+
 .cart-badge {
   background-color: #e30613;
   color: #ffffff;
@@ -257,34 +313,48 @@ export default defineComponent({
 
 .category-banner {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Kategorileri eşit boşluklarla hizala */
+  align-items: center; /* Dikey hizalama */
   background-color: #fff;
-  padding: 2px 200px;
+  padding: 2px 20px; /* Üst ve alt için 2px, sağ ve sol için 20px */
   border-bottom: 1px solid #ddd;
+  margin-top: 70px;
+  margin-bottom: 20px;
+  max-width: 1450px; /* Üst kısımla aynı genişlik */
+  margin-left: auto; /* Yatayda ortalamak için */
+  margin-right: auto; /* Yatayda ortalamak için */
+  height: 50px; /* Üst kısımla aynı yüksekliği ayarla */
+  box-sizing: border-box; /* Padding'in genişlik dahil olmasını sağlar */
 }
 
 .category-item {
-  padding: 8px 10px;
   font-size: 14px;
   font-weight: bold;
   color: #000;
   text-align: center;
   cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-  margin-right: 5px;
-
+  position: relative; /* Pseudo-element için konumlandırma */
+  padding: 0 10px; /* Sağ ve sol arasında boşluk */
 }
 
-.category-item:not(:last-child) {
-  border-right: 1px solid #e30613;
+.category-item::after {
+  content: "|"; /* Çizgi sembolü */
+  position: absolute;
+  right: -25px; /* Çizgiyi kategori öğesinin sağına yerleştir */
+  top: 50%; /* Ortalamak için */
+  transform: translateY(-50%); /* Dikeyde tam ortalamayı sağlar */
+  color: #e30613; /* Çizgi rengi */
+  font-size: 26px; /* Çizgi boyutu */
+}
+
+.category-item:last-child::after {
+  content: ""; /* Son öğede çizgiyi gizle */
 }
 
 .category-item:hover {
-  background-color: #e30613;
-  color: #fff;
-  border-radius: 15px;
+  background-color: #e30613; /* Hover durumunda arka plan kırmızı */
+  color: #fff; /* Yazı rengi beyaz */
+  border-radius: 7px; /* Hover sırasında köşeleri daha yuvarlak yap */
 }
 
 .highlight {
