@@ -54,7 +54,7 @@
         </div>
       </div>
 
-      <button @click="submitForm" class="submit-btn">Kayıt Ol</button>
+      <button @click="handleRegister" class="submit-btn">Kayıt Ol</button>
 
       <div class="social-login">
         <div class="separator">veya</div>
@@ -92,7 +92,7 @@
         </div>
       </div>
 
-      <button @click="submitForm" class="submit-btn">Giriş Yap</button>
+      <button @click="handleLogin" class="submit-btn">Giriş Yap</button>
 
       <div class="social-login">
         <div class="separator">veya</div>
@@ -105,7 +105,10 @@
 </template>
 
 <script lang="ts">
-
+import { useNuxtApp } from "#app";
+import { useAuthStore } from "@/stores/auth";
+import { useRouter } from "vue-router";
+import { addDoc, collection } from "firebase/firestore";
 const passwordVisible = ref(false); // Şifre görünürlüğü kontrolü
 const passwordVisible1 = ref(false); // Şifre görünürlüğü kontrolü
 const togglePasswordVisibility = () => {
@@ -128,13 +131,16 @@ export default defineComponent({
     const password1 = ref("");
     const password2 = ref("");
     const checkboxValues = ref([false, false, false]);
+    const authStore = useAuthStore();
+        const router = useRouter();
+        const { $firebaseDb } = useNuxtApp();
     const checkboxLabels = ref([
       "Ticari Elektronik İleti Onayı metnini okudum, onaylıyorum. Tarafınızdan gönderilecek bilgilendirme e-postalarını almak istiyorum.",
         "Ticari Elektronik İleti Onayı metnini okudum, onaylıyorum. Tarafınızdan gönderilecek bilgilendirme sms'lerini almak istiyorum.",
         "Ticari Elektronik İleti Onayı metnini okudum, onaylıyorum. Tarafınızdan gönderilecek bilgilendirme arama'larını almak istiyorum.",
         "KVKK Sözleşmesi'ni okudum ve kabul ediyorum.",
 
-      
+       
     ]);
 
     const checkboxLabels2 = ref([
@@ -158,6 +164,50 @@ export default defineComponent({
       });
     };
 
+
+    const registerUser = async () => {
+      if (password1.value !== password2.value) {
+        alert("Şifreler uyuşmuyor!");
+        return;
+      }
+      try {
+        await authStore.register(email.value, password1.value);
+        await addDoc(collection($firebaseDb, "users"), {
+          ad: ad.value,
+          soyad: soyad.value,
+          birthday: birthday.value,
+          cepno: cepno.value,
+          email: email.value,
+        });
+        alert("Kayıt başarılı! Profil sayfasına yönlendiriliyorsunuz.");
+        router.push("/page3"); // Profil sayfasına yönlendir
+      } catch (error) {
+        console.error("Kayıt sırasında bir hata oluştu:", error);
+        alert("Bir hata oluştu, lütfen tekrar deneyin.");
+      }
+    };
+
+    const loginUser = async () => {
+      try {
+        await authStore.login(email.value, password1.value);
+        alert("Giriş başarılı!");
+        router.push("/page3"); // Profil sayfasına yönlendir
+      } catch (error) {
+        console.error("Giriş sırasında bir hata oluştu:", error);
+        alert("Bir hata oluştu, lütfen bilgilerinizi kontrol edin.");
+      }
+    };
+
+    const handleRegister = async () => {
+      submitForm(); // Formu kontrol etmek ve verileri göstermek için
+      await registerUser(); // Kayıt işlemini yürütmek için
+    };
+
+    const handleLogin = async () => {
+      submitForm(); // Formu kontrol etmek ve verileri göstermek için
+      await loginUser(); // Giriş işlemini yürütmek için
+    };
+
     return {
       isSignUp,
       ad,
@@ -176,6 +226,10 @@ export default defineComponent({
       passwordVisible1,
       togglePasswordVisibility,
       togglePasswordVisibility1,
+      registerUser,
+      loginUser,
+      handleRegister,
+      handleLogin,
     };
   },
 });

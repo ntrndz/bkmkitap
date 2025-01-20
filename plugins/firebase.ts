@@ -2,7 +2,7 @@
 import { defineNuxtPlugin } from "#app";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-
+import { getAuth } from "firebase/auth"; // Firebase Authentication modülü
 
 // Firebase config
 const firebaseConfig = {
@@ -21,12 +21,18 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 // Firestore instance
 const db = getFirestore(app);
 
+// Authentication instance
+const auth = getAuth(app);
+
 console.log("Firestore initialized:", db);
+console.log("Firebase Authentication initialized:", auth);
+
 
 export default defineNuxtPlugin(() => {
   return {
     provide: {
       firebaseDb: db,
+      firebaseAuth: auth, // Authentication'ı sağlayın
     },
   };
 });

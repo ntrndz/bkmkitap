@@ -81,6 +81,8 @@ export default defineComponent({
   padding: 20px;
   border-radius: 10px;
   font-family: Arial, sans-serif;
+  max-width: 1250px; /* Maksimum genişlik */
+  margin-left: 450px; /* Soldan boşluk */
 }
 
 /* Header */
@@ -155,6 +157,8 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+ 
 }
 
 .item-left {

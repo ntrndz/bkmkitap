@@ -3,47 +3,33 @@
     <!-- Kullanıcı Bilgileri ve Profil -->
     <div class="user-info">
       <div class="avatar">
-        <img src="public/images/avatar.png" alt="avatar" />
+        <img src="/images/avatar.png" alt="avatar" />
       </div>
       <div class="user-details">
-        <p class="user-name">Nehir Tirindaz</p>
-        <p class="user-email">nehir_tirindaz@hotmail.com</p>
+        <p class="user-name">{{ authStore.user?.email || "Kullanıcı Adı" }}</p>
+        <p class="user-email">{{ authStore.user?.email || "E-posta adresi bulunamadı" }}</p>
         <button class="account-button">Hesabım</button>
       </div>
       <div class="menu-list">
         <button class="menu-item">
-          <img src="/public/images/avatar.png" alt="Icon" class="menu-icon1" />
-
-          <h7>KİŞİSEL BİLGİLERİM</h7>
+          <img src="/images/avatar.png" alt="Icon" class="menu-icon1" />
+          <span>KİŞİSEL BİLGİLERİM</span>
         </button>
         <button class="menu-item">
-          <img src="/public/images/messages.png" alt="Icon" class="menu-icon1" />
- 
-          MESAJLARIM  
+          <img src="/images/messages.png" alt="Icon" class="menu-icon1" />
+          <span>MESAJLARIM</span>
         </button>
-        <button class="menu-item">
-          <img src="/public/images/Exit.png" alt="Icon" class="menu-icon1" />
-           ÇIKIŞ
+        <button class="menu-item" @click="logout">
+          <img src="/images/Exit.png" alt="Icon" class="menu-icon1" />
+          <span>ÇIKIŞ</span>
         </button>
       </div>
     </div>
 
     <!-- Menü -->
     <div class="menu">
-      <!-- Sipariş Takip ve Üst Satır -->
+      <!-- Üst Satır -->
       <div class="menu-row top-row">
-        <div class="order-tracking">
-          <p class="order-title">SİPARİŞ TAKİP</p>
-          <div class="order-input-container">
-            <input
-              v-model="orderNumber"
-              type="text"
-              class="order-input"
-              placeholder="Sipariş Numarası"
-            />
-            <button @click="searchOrder" class="search-btn">ARA</button>
-          </div>
-        </div>
         <div class="menu-item">
           <button class="menu-btn">
             <i class="menu-icon">🛒</i> Siparişlerim
@@ -94,15 +80,25 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth"; // Pinia store'dan auth
 
+const router = useRouter();
+const authStore = useAuthStore();
 
-const orderNumber = ref<string>("");
+onMounted(() => {
+  if (!authStore.user) {
+    router.push("/page2"); // Giriş yapılmamışsa giriş ekranına yönlendir
+  }
+});
 
-const searchOrder = () => {
-  if (orderNumber.value) {
-    console.log('Sipariş Numarası: ${orderNumber.value}');
-    // Burada API çağrısı yapılabilir.
+const logout = async () => {
+  try {
+    await authStore.logout();
+    router.push("/page2"); // Çıkış yaptıktan sonra giriş ekranına yönlendir
+  } catch (error) {
+    console.error("Çıkış yaparken hata oluştu:", error);
   }
 };
 </script>

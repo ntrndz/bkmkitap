@@ -4,9 +4,11 @@
     "strict": true, // TypeScript hatalarını yakalamak için sıkı mod
     "baseUrl": ".", // Proje kök dizini
     "paths": {
-      "#app": [".nuxt/types/app/index.d.ts"],
-      "#build": [".nuxt/types/build/index.d.ts"]
-    }
+      "#app": [".nuxt/types/app"],
+      "#build": [".nuxt/types/build"]
+    },
+  "types": ["@nuxt/types"]
+
   },
   "include": [
     ".nuxt/types/**/*.d.ts", // Nuxt'un tür tanımlamaları

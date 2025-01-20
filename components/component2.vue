@@ -5,13 +5,17 @@
       <!-- Logo and Menu Section -->
       <div class="fixed-header">
         <!-- Logo -->
-        <div class="logo">
+         <div>
+        <button class="logo" @click="goToHome">
           <img
             src="https://cdn.bkmkitap.com/Data/EditorFiles/logonew23.png"
             alt="Logo"
             class="logo-image"
           />
+        </button>
         </div>
+
+      
 
         <!-- Menu Button -->
         <div class="menu">
@@ -43,8 +47,16 @@
           <button class="auth-button" @click="goToFavorites">
             <img src="/public/images/favicon.png" alt="Favoriler" class="button-icon" />
           </button>
-          <button class="auth-button">
-            <img src="/public/images/profil.png" alt="Profil" class="button-icon" />
+        <!-- Profil veya Login Durumu -->
+        <button class="auth-button" @click="handleAuthButton">
+              <img
+              :src="authStore.user ? '/images/profil.png' : '/images/profil.png'"
+              alt="Profil"
+              class="button-icon"
+            />
+
+            <span v-if="authStore.user">Profil</span>
+            <span v-else></span>
           </button>
 
           <button class="cart-button" @click="goToSepet">
@@ -73,6 +85,7 @@
 import { defineComponent, ref } from "vue";
 import { navigateTo } from "nuxt/app"; // Nuxt yönlendirme fonksiyonu
 import { useRouter } from "vue-router"; // Vue Router kullanımı
+import { useAuthStore } from "@/stores/auth"; // Pinia Store
 
 export default defineComponent({
   name: "Component2",
@@ -91,6 +104,7 @@ export default defineComponent({
     ]);
 
     const router = useRouter(); // Yönlendirme için Router
+    const authStore = useAuthStore(); // Kullanıcı durumunu kontrol etmek için Pinia store
     const handleCategoryClick = (category: string) => {
       if (category === "EDEBİYAT KİTAPLARI") {
         router.push("/page5"); // Edebiyat Kitapları için yönlendirme
@@ -116,6 +130,21 @@ export default defineComponent({
       navigateTo("/page4"); // Page 4'ye yönlendir
     };
 
+  // Login veya Profil butonuna tıklandığında:
+  const handleAuthButton = () => {
+      if (authStore.user) {
+        // Kullanıcı giriş yapmışsa Profil sayfasına yönlendir
+        router.push("/page3");
+      } else {
+        // Kullanıcı giriş yapmamışsa Giriş/Kayıt sayfasına yönlendir
+        router.push("/page2");
+      }
+    };
+    const goToHome = () => {
+  router.push("/page1"); // Page 1'e yönlendirme
+};
+
+
     return {
       menuOpen,
       searchQuery,
@@ -124,6 +153,9 @@ export default defineComponent({
       goToFavorites,
       handleCategoryClick,
       goToSepet,
+      handleAuthButton,
+      authStore, // Kullanıcı durumunu kullanmak için store'u döndür
+      goToHome,
     };
   },
 });
@@ -185,11 +217,20 @@ export default defineComponent({
 
 .logo {
   margin-right: 20px;
+  border: none; /* Kenarlığı kaldırır */
+  box-shadow: none; /* Herhangi bir gölgeyi kaldırır */
+ 
+  background-color: transparent; /* Arka planı şeffaf yapar */
+
+
 }
 
 .logo-image {
   height: 60px;
+  border: none; /* Kenarlığı kaldırır */
+  box-shadow: none; /* Herhangi bir gölgeyi kaldırır */
 }
+
 
 .menu {
   display: flex;
